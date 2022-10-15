@@ -11,67 +11,83 @@
             : 'card-header list-group-item-warning'
         ">
             <p v-if="!task.isEditable">{{ task.state }}</p>
-            <input :class="
+            <select :class="
               task.state === 'Todo'
                 ? 'card-header list-group-item-danger'
                 : task.state === 'Done'
                 ? 'card-header list-group-item-success'
                 : 'card-header list-group-item-warning'
-            " type="text" v-else @blur="task.isEditable=!task.isEditable" v-model="task.state" />
+            " v-else @blur="task.isEditable=!task.isEditable" v-model="task.state">
+                <option value="Todo">Todo</option>
+                <option value="Done">Done</option>
+            </select>
         </div>
         <div class="card-body">
             <h5 class="card-title">
                 <p v-if="!task.isEditable">{{ task.title }}</p>
-                <input class="form-control" type="text" v-else @blur="task.isEditable=!task.isEditable" v-model="task.title" />
+                <input class="form-control" type="text" v-else @blur="task.isEditable=!task.isEditable"
+                    v-model="task.title" />
             </h5>
             <p class="card-text" v-if="!task.isEditable">
                 {{ task.description }}
             </p>
-            <input class="form-control" type="text" v-else @blur="task.isEditable=!task.isEditable" v-model="task.description" />
+            <input class="form-control" type="text" v-else @blur="task.isEditable=!task.isEditable"
+                v-model="task.description" />
             <div class="mb-1">
                 <small class="text-muted" v-if="!task.isEditable">
                     {{ task.date }}
                 </small>
-                <input class="form-control" type="date" v-else @blur="task.isEditable=!task.isEditable" v-model="task.date" />
+                <input class="form-control" type="date" v-else @blur="task.isEditable=!task.isEditable"
+                    v-model="task.date" />
             </div>
             <div class="float-end">
                 <img src="./../assets/VueEdit.png" width="20" height="20" alt="Edit"
                     style="vertical-align: middle; margin: 0px 10px" @click="task.isEditable=!task.isEditable" />
                 <img src="./../assets/VueDelete.png" width="16" alt="Delete"
-                    style="vertical-align: middle; margin: 0px 10px" @click="task.state='deleted'"/>
-                <img src="./../assets/VueDots.png" width="5" alt="More"
-                    style="vertical-align: middle; margin: 0px 10px" />
+                    style="vertical-align: middle; margin: 0px 10px" @click="deleteTask" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
+
+import { useTaskStore } from '../stores/TaskStore'
+
 export default {
-    name: "ItemList",        
+    name: "ItemList",
     props: {
         task: {
-                id: Number,
-                title: String,
-                description: String,
-                state: String,
-                date: String,
-                isEditable: Boolean,
-            },   
-    },
-    methods:{       
-        updateTask(id) { },
-        removeTask(id) {
-            const indexOfObject = this.taskList.findIndex((object) => {
-                return object.id === id;
-            });
-            this.taskList.splice(indexOfObject, 1);
+            id: Number,
+            title: String,
+            description: String,
+            state: String,
+            date: String,
+            isEditable: Boolean,
         },
-        selectTask() { },
     },
-    updated() {
-    this.$emit("task-update", this.task);
-  },
+
+    setup() {
+        const taskStore = useTaskStore()
+        return { taskStore }
+    },
+
+    /*computed: {
+        getTask() {
+            console.log(this.taskStore.getTaskById(this.task.id))
+            this.task = this.taskStore.getTaskById(this.task.id)
+        }
+    },*/
+
+    methods: {
+        updateTask() {
+            this.taskStore.updateTask(this.task)
+        },
+        deleteTask() {
+            this.taskStore.deleteTask(this.task.id)
+        }
+    },
+
 }
 </script>
 

@@ -1,19 +1,19 @@
 <template>
     <div class="wrapper">       
         <div class="appBox">
-            <StateView></StateView>
+            <router-view></router-view>
         </div>
     </div>
 </template>
 
 <script>
-import ListView from "./views/ListView.vue"
-import StateView from "./views/StateView.vue"
+//import ListView from "./views/ListView.vue"
+//import StateView from "./views/StateView.vue"
 
 export default {
     name: "App",
     components: {
-        ListView, StateView
+        //ListView, StateView
     }
 }
 </script>

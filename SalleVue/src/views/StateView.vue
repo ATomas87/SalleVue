@@ -9,10 +9,15 @@
     <div class="container">
         <div class="row">
             <div class="col float-start">
-                <img src="./../assets/VueListActive.png" width="30" height="30" alt="Edit"
-                    style="vertical-align: middle; margin: 0px 10px" />
-                <img src="./../assets/VueDragListDeActive.png" width="30" height="30" alt="Edit"
-                    style="vertical-align: middle; margin: 0px 10px" />
+                <router-link to="/ListView">
+                    <img src="./../assets/VueListActive.png" width="30" height="30" alt="List"
+                        style="vertical-align: middle; margin: 0px 10px" />
+                </router-link>
+
+                <router-link to="/StateView">
+                    <img src="./../assets/VueDragListDeActive.png" width="30" height="30" alt="State"
+                        style="vertical-align: middle; margin: 0px 10px" />
+                </router-link>
             </div>
             <div class="col">
                 <input class="form-control" v-model="search" placeholder="Search title.." type="search"
