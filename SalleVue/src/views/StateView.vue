@@ -3,15 +3,15 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
     <div><br /></div>
     <div>
-        <img src="./assets/VueLogo.png" style="margin: 20px 30px" />
+        <img src="./../assets/VueLogo.png" style="margin: 10px 10px" />
     </div>
     <br />
     <div class="container">
         <div class="row">
             <div class="col float-start">
-                <img src="./assets/VueListActive.png" width="30" height="30" alt="Edit"
+                <img src="./../assets/VueListActive.png" width="30" height="30" alt="Edit"
                     style="vertical-align: middle; margin: 0px 10px" />
-                <img src="./assets/VueDragListDeActive.png" width="30" height="30" alt="Edit"
+                <img src="./../assets/VueDragListDeActive.png" width="30" height="30" alt="Edit"
                     style="vertical-align: middle; margin: 0px 10px" />
             </div>
             <div class="col">
@@ -19,7 +19,7 @@
                     style="display: inline" />
             </div>
             <div class="col">
-                <img src="./assets/VueFilter.png" width="20" height="20" alt="Filter" style="display: inline" />
+                <img src="./../assets/VueFilter.png" width="20" height="20" alt="Filter" style="display: inline" />
             </div>
         </div>
     </div>
@@ -28,7 +28,7 @@
     <div class="container">
         <div class="lists">
             <div class="left">
-                <h2>To Do</h2>
+                <h3>To Do</h3>
                 <div class="row">
                     <div class="col" v-for="task in taskList.filter((task) => task.state === 'Todo')" :key="task.id">
                         <div class="card">
@@ -62,12 +62,12 @@
                                         v-model="task.date" />
                                 </div>
                                 <div class="float-end">
-                                    <img src="./assets/VueEdit.png" width="20" height="20" alt="Edit"
+                                    <img src="./../assets/VueEdit.png" width="20" height="20" alt="Edit"
                                         style="vertical-align: middle; margin: 0px 10px"
                                         @click="changeInput(task.id)" />
-                                    <img src="./assets/VueDelete.png" width="16" alt="Delete"
+                                    <img src="./../assets/VueDelete.png" width="16" alt="Delete"
                                         style="vertical-align: middle; margin: 0px 10px" @click="removeTask(task.id)" />
-                                    <img src="./assets/VueDots.png" width="5" alt="More"
+                                    <img src="./../assets/VueDots.png" width="5" alt="More"
                                         style="vertical-align: middle; margin: 0px 10px" />
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
             <!-- INICI PART LLISTAT RIGHT (DONE) -->
 
             <div class="right">
-                <h2>Done</h2>
+                <h3>Done</h3>
                 <div class="row">
                     <div class="col" v-for="task in taskList.filter((task) => task.state === 'Done')" :key="task.id">
                         <div class="card">
@@ -114,12 +114,12 @@
                                         v-model="task.date" />
                                 </div>
                                 <div class="float-end">
-                                    <img src="./assets/VueEdit.png" width="20" height="20" alt="Edit"
+                                    <img src="./../assets/VueEdit.png" width="20" height="20" alt="Edit"
                                         style="vertical-align: middle; margin: 0px 10px"
                                         @click="changeInput(task.id)" />
-                                    <img src="./assets/VueDelete.png" width="16" alt="Delete"
+                                    <img src="./../assets/VueDelete.png" width="16" alt="Delete"
                                         style="vertical-align: middle; margin: 0px 10px" @click="removeTask(task.id)" />
-                                    <img src="./assets/VueDots.png" width="5" alt="More"
+                                    <img src="./../assets/VueDots.png" width="5" alt="More"
                                         style="vertical-align: middle; margin: 0px 10px" />
                                 </div>
                             </div>
@@ -247,7 +247,7 @@ export default {
                         "With supporting text below as a natural lead-in to additional content 2",
                     state: "Todo",
                     date: "2022-10-02",
-                    isEditable: true,
+                    isEditable: false,
                 },
                 {
                     id: 3,
@@ -265,7 +265,7 @@ export default {
                         "With supporting text below as a natural lead-in to additional content 4",
                     state: "Todo",
                     date: "2022-10-06",
-                    isEditable: true,
+                    isEditable: false,
                 },
                 {
                     id: 5,
