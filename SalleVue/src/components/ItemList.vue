@@ -62,7 +62,7 @@ export default {
             title: String,
             description: String,
             state: String,
-            date: String,
+            date: Date,
             isEditable: Boolean,
         },
     },
@@ -71,13 +71,6 @@ export default {
         const taskStore = useTaskStore()
         return { taskStore }
     },
-
-    /*computed: {
-        getTask() {
-            console.log(this.taskStore.getTaskById(this.task.id))
-            this.task = this.taskStore.getTaskById(this.task.id)
-        }
-    },*/
 
     methods: {
         updateTask() {

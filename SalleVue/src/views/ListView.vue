@@ -1,6 +1,7 @@
 <template>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+
     <div>
         <img src="./../assets/VueLogo.png" style="margin: 10px 10px" />
     </div>
@@ -8,36 +9,35 @@
     <div class="container">
         <div class="row">
             <div class="col float-start">
+                <div>
+                    <router-link to="/ListView"
+                        style="color: black;display:flex;text-decoration:none;vertical-align: middle; margin: 0px 10px">
+                        <img src="./../assets/VueListDeActive.png" width="30" height="30" alt="List"
+                            style="vertical-align: middle; margin: 0px 10px" />
+                    </router-link>
 
-                <router-link to="/ListView">
-                    <img src="./../assets/VueListActive.png" width="30" height="30" alt="List"
-                        style="vertical-align: middle; margin: 0px 10px" />
-                </router-link>
-
-                <router-link to="/StateView">
-                    <img src="./../assets/VueDragListDeActive.png" width="30" height="30" alt="State"
-                        style="vertical-align: middle; margin: 0px 10px" />
-                </router-link>
-
+                    <router-link to="/StateView"
+                        style="color: black;display: flex;text-decoration:none;vertical-align: middle; margin: 0px 10px">
+                        <img src="./../assets/VueDragListActive.png" width="30" height="30" alt="List"
+                            style="vertical-align: middle; margin: 0px 10px" />
+                    </router-link>
+                </div>
             </div>
-            <!--<div class="col">
+            <div class="col">
                 <input class="form-control" v-model="search" placeholder="Search title.." type="search"
                     style="display: inline" />
-            </div>-->
+            </div>
             <div class="col">
                 <img src="./../assets/VueFilter.png" width="20" height="20" alt="Filter" style="display: inline" />
             </div>
             <div class="col">
                 <img src="./../assets/VueAdd.png" @click="insertTask" alt="New" />
             </div>
-
         </div>
     </div>
 
-    <!-- INICI DEL LLISTAT  -->
-
     <div><br /></div>
-    <div class="container vertical-scrollable ">
+    <div class="container">
         <div v-for="task in TaskList" :key="task.id">
             <ItemList :task="task" @task-update="taskStore.updateTask()">
             </ItemList>
@@ -83,13 +83,6 @@ export default {
 </script>
   
 <style>
-.vertical-scrollable {
-    /*  position: absolute; */
-    /* top: 120px;
-            bottom: 100px;
-            left: 180px;           
-            width: 50%;*/
-    overflow-y: scroll;
-}
+
 </style>
   
