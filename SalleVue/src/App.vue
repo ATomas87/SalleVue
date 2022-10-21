@@ -1,20 +1,26 @@
 <template>
-    <div class="wrapper">       
-        <div class="appBox">
-            <router-view></router-view>
-        </div>
-    </div>
+    <router-view></router-view>
 </template>
 
 <script>
-//import ListView from "./views/ListView.vue"
-//import StateView from "./views/StateView.vue"
+
+import { useTaskStore } from './stores/TaskStore'
+import { createDOMCompilerError } from '@vue/compiler-dom';
 
 export default {
     name: "App",
     components: {
-        //ListView, StateView
+        //ListView, StateView        
+    },
+    setup() {
+        const taskStore = useTaskStore()
+        return { taskStore }
+    },
+    created()
+    {
+        this.taskStore.initializedTask()
     }
+    
 }
 </script>
 

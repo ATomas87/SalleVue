@@ -2,61 +2,72 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
 
-    <div>
-        <img src="./../assets/VueLogo.png" style="margin: 10px 10px" />
-    </div>
+    <div class="wrapper">
+        <div class="appBox">
 
-    <div class="container">
-        <div class="row">
-            <div class="col float-start">
-                <router-link to="/ListView"
-                    style="display: inline-block;text-decoration:none;vertical-align: middle; margin: 0px 10px">
-                    <img src="./../assets/VueListActive.png" width="30" height="30" alt="List"
-                        style="vertical-align: middle; margin: 0px 10px" />
-                </router-link>
+            <div>
+                <img src="./../assets/VueLogo.png" style="margin: 10px 10px" />
+            </div>
 
-                <router-link to="/StateView"
-                    style="display: inline-block;text-decoration:none;vertical-align: middle; margin: 0px 10px">
-                    <img src="./../assets/VueDragListDeActive.png" width="30" height="30" alt="State"
-                        style="vertical-align: middle; margin: 0px 10px" />
-                </router-link>
-            </div>
-            <div class="col">
-                <input class="form-control" v-model="search" placeholder="Search title.." type="search"
-                    style="display: inline" />
-            </div>
-            <div class="col">
-                <img src="./../assets/VueFilter.png" width="20" height="20" alt="Filter" style="display: inline" />
-            </div>
-        </div>
-    </div>
-
-    <div><br /></div>
-    <div class="container">
-        <div class="lists">
-            <div class="left">
-                <h3>To Do</h3>
+            <div class="container">
                 <div class="row">
-                    <div class="col" v-for="task in TaskList.filter((task) => task.state === 'Todo')" :key="task.id">
-                        <ItemState :task="task" @task-update="taskStore.updateTask()">
-                        </ItemState>
-                        <br />
+                    <div class="col float-start">
+                        <router-link to="/ListView"
+                            style="display: inline-block;text-decoration:none;vertical-align: middle; margin: 0px 10px">
+                            <img src="./../assets/VueListDeActive.png" width="30" height="30" alt="List"
+                                style="vertical-align: middle; margin: 0px 10px" />
+                        </router-link>
+
+                        <router-link to="/StateView"
+                            style="display: inline-block;text-decoration:none;vertical-align: middle; margin: 0px 10px">
+                            <img src="./../assets/VueDragListActive.png" width="30" height="30" alt="State"
+                                style="vertical-align: middle; margin: 0px 10px" />
+                        </router-link>
+                    </div>
+                    <div class="col">
+                        <input class="form-control" v-model="search" placeholder="Search title.." type="search"
+                            style="display: inline" />
+                    </div>
+                    <div class="col">
+                        <img src="./../assets/VueFilter.png" width="20" height="20" alt="Filter"
+                            style="display: inline" />
                     </div>
                 </div>
             </div>
-            <!-- INICI PART LLISTAT RIGHT (DONE) -->
-            <div class="right">
-                <h3>Done</h3>
-                <div class="row">
-                    <div class="col" v-for="task in TaskList.filter((task) => task.state === 'Done')" :key="task.id">
-                        <ItemState :task="task" @task-update="taskStore.updateTask()">
-                        </ItemState>
-                        <br />
+
+            <div><br /></div>
+            <div class="container">
+                <div class="lists">
+                    <div class="left">
+                        <h3>To Do</h3>
+                        <div class="row">
+                            <div class="col" v-for="task in TaskList.filter((task) => task.state === 'Todo')"
+                                :key="task.id">
+                                <ItemState :task="task" @task-update="taskStore.updateTask()">
+                                </ItemState>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- INICI PART LLISTAT RIGHT (DONE) -->
+                    <div class="right">
+                        <h3>Done</h3>
+                        <div class="row">
+                            <div class="col" v-for="task in TaskList.filter((task) => task.state === 'Done')"
+                                :key="task.id">
+                                <ItemState :task="task" @task-update="taskStore.updateTask()">
+                                </ItemState>
+                                <br />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
+
+
 </template>
   
 <script>
@@ -120,5 +131,22 @@ export default {
     width: 45vw;
     padding: 20px;
     min-height: 200px;
+}
+
+.wrapper {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    background: #eee;
+}
+
+.appBox {
+    max-width: 660px;
+    min-height: 400px;
+    width: 80%;
+    margin: 100px;
+    padding: 20px;
+    box-shadow: 3px 2px 12px 8px #e1e1e1;
+    border-radius: 20px;
 }
 </style>

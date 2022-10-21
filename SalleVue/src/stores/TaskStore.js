@@ -47,21 +47,47 @@ export const useTaskStore = defineStore('task', {
 
     //accions per modificar la informació
     actions: {
-        insertTask() {
+        async initializedTask() {
+            const url = "https://todos-mpwar.herokuapp.com/users/aleh/todos";
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                this.taskList = data;
+                console.log("this.todos", this.todos);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+       async insertTask() {
             //console.log("ha entrado en insert")
-            let newtask = {
+            /* let newtask = {
                 id: this.newTaskId(),
                 title: "This is a new task",
                 description: "Please enter a new description for this task",
                 state: "Todo",
                 date: this.getTodayDate(),
                 isEditable: true,
-            };
-            if (newtask.title.length > 0) {
-                this.taskList.push(newtask);
-                this.taskList.sort((a, b) => { return b.id - a.id });
-                //console.log(this.taskList);                   
-            }
+            }; */
+            // Aqui haremos una peticion para insertar esta tarea en backend (API)
+            // cuando se resuelva la post, el resultado lo añadimos a la lista (push)
+            console.log("Passa per insert");
+            console.log(this.taskList);  
+            const requestOptions = {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({ text: "This is a new task" }),
+              };
+              const url = "https://todos-mpwar.herokuapp.com/users/aleh/todos";
+              try {
+                const response = await fetch(url, requestOptions);
+                const data = await response.json();
+                console.log("data");                  
+                this.taskList.push(data);
+                this.taskList.sort((a, b) => { return b.id - a.id });                                                    
+              } catch (error) {
+                console.log(error);
+              }
+            
         },
 
         updateTask(updatedtask) {
@@ -89,17 +115,17 @@ export const useTaskStore = defineStore('task', {
             return this.taskList.reduce((max, curr) => Math.max(max, curr.id), 0) + 1;
         },
         getTodayDate() {
-            var today = new Date();
-            var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-            var yyyy = today.getFullYear();
-            today = yyyy + "-" + mm + "-" + dd;
-            console.log("la fecha es: " + today)
-            return today.toDateString;
+            let today = new Date();
+            let dd = String(today.getDate()).padStart(2, '0');
+            let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            let yyyy = today.getFullYear();
+            const todayformat = yyyy + "-" + mm + "-" + dd;
+            console.log("la fecha es: " + todayformat, today.toDateString())
+            return todayformat;
         },
     },
 
-    computed: {              
+    computed: {
 
     },
 });
