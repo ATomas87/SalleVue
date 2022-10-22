@@ -1,43 +1,70 @@
+import { getConstantType } from '@vue/compiler-core';
 import { defineStore } from 'pinia' //importacio necessaria per senyalar que es un store
 
 export const useTaskStore = defineStore('task', {
     //Inicialitzacio del store = que retornarà 
     state: () => ({
         taskList: [
-            {
-                id: 1,
-                title: "1. Special title treatment 1",
-                description:
-                    "With supporting text below as a natural lead-in to additional content 1",
-                state: "Done",
-                date: "2022-10-01",
-                isEditable: false,
-            },
-            {
-                id: 2,
-                title: "2. Special title treatment 2",
-                description:
-                    "With supporting text below as a natural lead-in to additional content 2",
-                state: "Done",
-                date: "2022-10-02",
-                isEditable: false,
-            },
-            {
-                id: 3,
-                title: "3. Special title treatment 3",
-                description:
-                    "With supporting text below as a natural lead-in to additional content 3",
-                state: "Done",
-                date: "2022-10-05",
-                isEditable: false,
-            },
+            /*  {
+                 id: 1,
+                 title: "1. Special title treatment 1",
+                 description:
+                     "With supporting text below as a natural lead-in to additional content 1",
+                 state: "Done",
+                 date: "2022-10-01",
+                 isEditable: false,
+             },
+             {
+                 id: 2,
+                 title: "2. Special title treatment 2",
+                 description:
+                     "With supporting text below as a natural lead-in to additional content 2",
+                 state: "Done",
+                 date: "2022-10-02",
+                 isEditable: false,
+             },
+             {
+                 id: 3,
+                 title: "3. Special title treatment 3",
+                 description:
+                     "With supporting text below as a natural lead-in to additional content 3",
+                 state: "Done",
+                 date: "2022-10-05",
+                 isEditable: false,
+             }, */
         ],
+        temporalData: [],
     }),
 
     //metodes per llegir informació
     getters:
     {
-        getTaskList: (state) => state.taskList.sort((a, b) => { return b.id - a.id }),
+        //getTaskList: (state) => state.taskList.sort((a, b) => { return b.id - a.id }),
+        getTaskList: (state) => {
+            console.log("Entra en getTaskList");
+
+            state.taskList.forEach(function (item) {
+                let newTask = {
+                    id: item?.id,
+                    title: String(item?.text),
+                    description: item.description,
+                    //description: "",
+                    //date: item.CreatedAt,
+                    //state: this.getState(item),
+                    state: "Todo",
+                    //isEditable: this.getEditable(item),
+                    isEditable: true,
+                }
+                //console.log(item);
+                //console.log(newTask);
+                state.taskList.push(newTask);
+
+                //state.taskList.sort((a, b) => { return b.id - a.id })          
+            }
+            );
+            console.log(state.taskList);
+            return state.taskList
+        },
         getTaskById: (state) => {
             return (id) => {
                 return state.taskList.find((item) => item.id === id);
@@ -50,27 +77,57 @@ export const useTaskStore = defineStore('task', {
         async initializedTask() {
             const url = "https://todos-mpwar.herokuapp.com/users/aleh/todos";
             try {
+                console.log("Entra en inicializar");
                 const response = await fetch(url);
                 const data = await response.json();
                 this.taskList = data;
-                console.log("this.todos", this.todos);
+                console.log("Guardado " + this.taskList);
             } catch (error) {
                 console.log(error);
             }
         },
-       async insertTask() {
+        manageData() {
+            console.log("Entra en manage");
+            this.taskList.forEach(function (item) {
+                let newTask = {
+                    id: item?.id,
+                    title: String(item?.text),
+                    description: item.description,
+                    //description: "",
+                    //date: item.CreatedAt,
+                    //state: this.getState(item),
+                    state: "Todo",
+                    //isEditable: this.getEditable(item),
+                    isEditable: true,
+                }
+                console.log(item);
+                console.log(newTask);
+                this.taskList.push(newTask);
+                console.log(this.taskList);
+            });
+        },
+
+        /* insertTask() {
             //console.log("ha entrado en insert")
-            /* let newtask = {
+            let newtask = {
                 id: this.newTaskId(),
                 title: "This is a new task",
                 description: "Please enter a new description for this task",
                 state: "Todo",
                 date: this.getTodayDate(),
                 isEditable: true,
-            }; */
+            };
+            if (newtask.title.length > 0) {
+                this.taskList.push(newtask);
+                this.taskList.sort((a, b) => { return b.id - a.id });
+                //console.log(this.taskList);                   
+            } */
+
+
+        /*async insertTask() {
             // Aqui haremos una peticion para insertar esta tarea en backend (API)
             // cuando se resuelva la post, el resultado lo añadimos a la lista (push)
-            console.log("Passa per insert");
+            /* console.log("Passa per insert");
             console.log(this.taskList);  
             const requestOptions = {
                 method: "POST",
@@ -86,9 +143,8 @@ export const useTaskStore = defineStore('task', {
                 this.taskList.sort((a, b) => { return b.id - a.id });                                                    
               } catch (error) {
                 console.log(error);
-              }
-            
-        },
+              } 
+        },*/
 
         updateTask(updatedtask) {
             console.log("ha entrado en update")
@@ -123,6 +179,22 @@ export const useTaskStore = defineStore('task', {
             console.log("la fecha es: " + todayformat, today.toDateString())
             return todayformat;
         },
+        getState(item) {
+            if (item.completed === true) {
+                return 'Done';
+            }
+            else {
+                return 'Todo';
+            }
+        },
+        getEditable(item) {
+            if (item.completed === true) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
     },
 
     computed: {
