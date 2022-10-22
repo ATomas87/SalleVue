@@ -137,7 +137,7 @@ export default {
     display: grid;
     place-items: center;
     min-height: 100vh;
-    background: #eee;
+    background: linear-gradient(to bottom, #C9A9E2, #8A3CC7);
 }
 
 .appBox {
@@ -148,5 +148,6 @@ export default {
     padding: 20px;
     box-shadow: 3px 2px 12px 8px #e1e1e1;
     border-radius: 20px;
+    background: #eee;
 }
 </style>

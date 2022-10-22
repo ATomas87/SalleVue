@@ -74,9 +74,11 @@ export default {
 
     methods: {
         updateTask() {
+            console.log("Entra a update de ItemList")
             this.taskStore.updateTask(this.task)
         },
         deleteTask() {
+            console.log("Entra a delete de ItemList")
             this.taskStore.deleteTask(this.task.id)
         }
     },

@@ -1,65 +1,48 @@
 import { getConstantType } from '@vue/compiler-core';
 import { defineStore } from 'pinia' //importacio necessaria per senyalar que es un store
 
+const url = "https://todos-mpwar.herokuapp.com/users/grup2/todos";
+
 export const useTaskStore = defineStore('task', {
     //Inicialitzacio del store = que retornarà 
     state: () => ({
-        taskList: [
-            /*  {
-                 id: 1,
-                 title: "1. Special title treatment 1",
-                 description:
-                     "With supporting text below as a natural lead-in to additional content 1",
-                 state: "Done",
-                 date: "2022-10-01",
-                 isEditable: false,
-             },
-             {
-                 id: 2,
-                 title: "2. Special title treatment 2",
-                 description:
-                     "With supporting text below as a natural lead-in to additional content 2",
-                 state: "Done",
-                 date: "2022-10-02",
-                 isEditable: false,
-             },
-             {
-                 id: 3,
-                 title: "3. Special title treatment 3",
-                 description:
-                     "With supporting text below as a natural lead-in to additional content 3",
-                 state: "Done",
-                 date: "2022-10-05",
-                 isEditable: false,
-             }, */
-        ],
+        taskList: [],
         temporalData: [],
     }),
 
     //metodes per llegir informació
     getters:
     {
-        //getTaskList: (state) => state.taskList.sort((a, b) => { return b.id - a.id }),
         getTaskList: (state) => {
             console.log("Entra en getTaskList");
-
-            state.taskList.forEach(function (item) {
+            state.taskList = [];
+            state.temporalData.forEach(function (item) {
                 let newTask = {
                     id: item?.id,
                     title: String(item?.text),
-                    description: item.description,
-                    //description: "",
-                    //date: item.CreatedAt,
-                    //state: this.getState(item),
-                    state: "Todo",
-                    //isEditable: this.getEditable(item),
-                    isEditable: true,
+                    description: item?.description,
+                    date: "",
+                    state: "",
+                    isEditable: false,
                 }
-                //console.log(item);
-                //console.log(newTask);
+                if (item?.completed === true) {
+                    newTask.state = 'Done';
+                }
+                else {
+                    newTask.state = 'Todo';
+                }
+                if (item?.completed === true) {
+                    newTask.isEditable = true;
+                }
+                else {
+                    newTask.isEditable = false;
+                }
+                let today = new Date();
+                let dd = String(today.getDate()).padStart(2, '0');
+                let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                let yyyy = today.getFullYear();
+                newTask.date = yyyy + "-" + mm + "-" + dd;
                 state.taskList.push(newTask);
-
-                //state.taskList.sort((a, b) => { return b.id - a.id })          
             }
             );
             console.log(state.taskList);
@@ -75,39 +58,76 @@ export const useTaskStore = defineStore('task', {
     //accions per modificar la informació
     actions: {
         async initializedTask() {
-            const url = "https://todos-mpwar.herokuapp.com/users/aleh/todos";
             try {
-                console.log("Entra en inicializar");
+                this.temporalData = [];
+                console.log("Entra en inicializar de store");
                 const response = await fetch(url);
                 const data = await response.json();
-                this.taskList = data;
-                console.log("Guardado " + this.taskList);
+                this.temporalData = data;
+                console.log("Guardado " + this.temporalData);
+            } catch (error) {
+                console.log(error);
+            }
+        },    
+
+        async insertTask() {
+            console.log("Passa per insert de store");           
+            const requestOptions = {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({ text: "This is a new task of grup 2" }),
+            };
+            try {
+                const response = await fetch(url, requestOptions);
+                const data = await response.json();              
+                this.temporalData.push(data);
             } catch (error) {
                 console.log(error);
             }
         },
-        manageData() {
-            console.log("Entra en manage");
-            this.taskList.forEach(function (item) {
-                let newTask = {
-                    id: item?.id,
-                    title: String(item?.text),
-                    description: item.description,
-                    //description: "",
-                    //date: item.CreatedAt,
-                    //state: this.getState(item),
-                    state: "Todo",
-                    //isEditable: this.getEditable(item),
-                    isEditable: true,
-                }
-                console.log(item);
-                console.log(newTask);
-                this.taskList.push(newTask);
-                console.log(this.taskList);
-            });
+
+        async updateTask(updatedTask) {
+            console.log("Passa per update de store"); 
+            let taskCompleted;
+            if (updatedTask.state === 'Done') {
+                taskCompleted=true;
+            }
+            else {
+                taskCompleted=false;
+            }          
+            const requestOptions = {
+                method: "PATCH",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({ text: updatedTask.title, description: updatedTask.description, completed:taskCompleted
+             }),
+            };
+            try {
+                const response = await fetch(url+"/"+updatedTask.id, requestOptions);
+                const data = await response.json();
+            } catch (error) {
+                console.log(error);
+            }
         },
 
-        /* insertTask() {
+        async deleteTask(id) {
+            console.log("Passa per delete de store");                    
+            const requestOptions = {
+                method: "DELETE",
+                headers: { "Content-type": "application/json" },                
+            };
+            try {
+                const response = await fetch(url+"/"+id, requestOptions);
+                const data = await response.json();
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+
+
+        /* FUNCIONS SINCRONES CONTRA STORE
+        
+        insertTask() {
             //console.log("ha entrado en insert")
             let newtask = {
                 id: this.newTaskId(),
@@ -121,33 +141,10 @@ export const useTaskStore = defineStore('task', {
                 this.taskList.push(newtask);
                 this.taskList.sort((a, b) => { return b.id - a.id });
                 //console.log(this.taskList);                   
-            } */
-
-
-        /*async insertTask() {
-            // Aqui haremos una peticion para insertar esta tarea en backend (API)
-            // cuando se resuelva la post, el resultado lo añadimos a la lista (push)
-            /* console.log("Passa per insert");
-            console.log(this.taskList);  
-            const requestOptions = {
-                method: "POST",
-                headers: { "Content-type": "application/json" },
-                body: JSON.stringify({ text: "This is a new task" }),
-              };
-              const url = "https://todos-mpwar.herokuapp.com/users/aleh/todos";
-              try {
-                const response = await fetch(url, requestOptions);
-                const data = await response.json();
-                console.log("data");                  
-                this.taskList.push(data);
-                this.taskList.sort((a, b) => { return b.id - a.id });                                                    
-              } catch (error) {
-                console.log(error);
-              } 
-        },*/
+            }      
 
         updateTask(updatedtask) {
-            console.log("ha entrado en update")
+            //console.log("Ha entrado en update")
             this.taskList.forEach(task => {
                 if (task.id === updatedtask.id) {
                     task.title = updatedtask.title;
@@ -156,9 +153,10 @@ export const useTaskStore = defineStore('task', {
                     task.date = updatedtask.date;
                 }
             })
-        },
+        }, 
+
         deleteTask(id) {
-            //console.log("ha entrado en delete")
+            //console.log("Ha entrado en delete")
             const indexOfObject = this.taskList.findIndex((object) => {
                 return object.id === id;
             });
@@ -167,9 +165,21 @@ export const useTaskStore = defineStore('task', {
             //console.log(this.taskList);           
         },
         newTaskId() {
-            //console.log("pasa por new");      
             return this.taskList.reduce((max, curr) => Math.max(max, curr.id), 0) + 1;
+        },*/
+
+
+
+        searchTask() {
+            console.log("Entra en filtered=" + searchCriteria)
+            return this.taskList.filter((task) => {
+                return task.title.toLowerCase().includes(searchCriteria.toLowerCase());
+            });
         },
+
+
+
+
         getTodayDate() {
             let today = new Date();
             let dd = String(today.getDate()).padStart(2, '0');

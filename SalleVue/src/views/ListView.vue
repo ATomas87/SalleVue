@@ -10,7 +10,7 @@
 
             <div class="container">
                 <div class="row">
-                    <div class="col float-start">
+                    <div class="col">
                         <div>
                             <router-link to="/ListView"
                                 style="color: black;display:flex;text-decoration:none;vertical-align: middle; margin: 0px 10px">
@@ -32,9 +32,11 @@
                     <div class="col">
                         <img src="./../assets/VueFilter.png" width="20" height="20" alt="Filter"
                             style="display: inline" />
+                            <!-- @click="filteredList" -->
                     </div>
                     <div class="col">
-                        <img src="./../assets/VueAdd.png" @click="insertTask" alt="New" />
+                        <!-- <img src="./../assets/VueAdd.png" @click="insertTask" alt="New" /> -->
+                        <p @click="insertTask" style='font-size:xx-large;'>+ Add</p>
                     </div>
                 </div>
             </div>
@@ -74,11 +76,13 @@ export default {
     methods: {
         insertTask() {
             this.taskStore.insertTask()
-        }
+        },
 
-        /*filteredList() {
-            return this.taskList.filter((task) => {
-                return task.title.toLowerCase().includes(this.search.toLowerCase());
+        /*filteredList() {           
+            this.taskStore.searchTask("baila")
+
+             return this.taskList.filter((task) => {
+                return task.title.toLowerCase().includes(this.search.toLowerCase()); 
             });
         },*/
     },
@@ -91,7 +95,7 @@ export default {
     display: grid;
     place-items: center;
     min-height: 100vh;
-    background: #eee;
+    background: linear-gradient(to bottom, #C9A9E2, #8A3CC7);     
 }
 
 .appBox {
@@ -102,6 +106,7 @@ export default {
     padding: 20px;
     box-shadow: 3px 2px 12px 8px #e1e1e1;
     border-radius: 20px;
+    background: #eee;
 }
 </style>
   
