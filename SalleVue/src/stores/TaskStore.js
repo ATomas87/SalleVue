@@ -13,8 +13,7 @@ export const useTaskStore = defineStore('task', {
     //metodes per llegir informació
     getters:
     {
-        getTaskList: (state) => {
-            console.log("Entra en getTaskList");
+        getTaskList: (state) => {           
             state.taskList = [];
             state.temporalData.forEach(function (item) {
                 let newTask = {
@@ -60,11 +59,10 @@ export const useTaskStore = defineStore('task', {
         async initializedTask() {
             try {
                 this.temporalData = [];
-                console.log("Entra en inicializar de store");
+                console.log("Passa per inicializar de store");
                 const response = await fetch(url);
                 const data = await response.json();
-                this.temporalData = data;
-                console.log("Guardado " + this.temporalData);
+                this.temporalData = data;                
             } catch (error) {
                 console.log(error);
             }
@@ -82,12 +80,13 @@ export const useTaskStore = defineStore('task', {
                 const data = await response.json();              
                 this.temporalData.push(data);
             } catch (error) {
-                console.log(error);
+                console.log("Error making insert " + error);
             }
         },
 
         async updateTask(updatedTask) {
             console.log("Passa per update de store"); 
+            console.log(updatedTask);
             let taskCompleted;
             if (updatedTask.state === 'Done') {
                 taskCompleted=true;
@@ -104,8 +103,16 @@ export const useTaskStore = defineStore('task', {
             try {
                 const response = await fetch(url+"/"+updatedTask.id, requestOptions);
                 const data = await response.json();
+                this.temporalData.forEach(task => {
+                    if (task.id === updatedTask.id) {
+                        task.title = updatedTask.title;
+                        task.description = updatedTask.description;
+                        task.state = updatedTask.state;
+                        task.date = updatedTask.date;
+                    }
+                })
             } catch (error) {
-                console.log(error);
+                console.log("Error making update " + error);
             }
         },
 
@@ -118,14 +125,48 @@ export const useTaskStore = defineStore('task', {
             try {
                 const response = await fetch(url+"/"+id, requestOptions);
                 const data = await response.json();
+                const indexOfObject = this.temporalData.findIndex((object) => {
+                    return object.id === id;
+                });
+                this.temporalData.splice(indexOfObject, 1);
             } catch (error) {
-                console.log(error);
+                console.log("Error making delete " + error);
             }
         },
 
 
+        /* searchTasks(searchCriteria) {
+            console.log("Entra en search de store. Criteri=" + searchCriteria)
+            return this.temporalData.filter((task) => {
+                return task.title.toLowerCase().includes(searchCriteria.toLowerCase());
+            });
+        }, */
 
-        /* FUNCIONS SINCRONES CONTRA STORE
+
+        getTodayDate() {
+            let today = new Date();
+            let dd = String(today.getDate()).padStart(2, '0');
+            let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            let yyyy = today.getFullYear();
+            const todayformat = yyyy + "-" + mm + "-" + dd;
+            console.log("la fecha es: " + todayformat, today.toDateString())
+            return todayformat;
+        },
+        
+    },
+
+    computed: {
+
+    },
+});
+
+
+
+
+
+
+
+/* FUNCIONS SINCRONES CONTRA STORE
         
         insertTask() {
             //console.log("ha entrado en insert")
@@ -167,47 +208,3 @@ export const useTaskStore = defineStore('task', {
         newTaskId() {
             return this.taskList.reduce((max, curr) => Math.max(max, curr.id), 0) + 1;
         },*/
-
-
-
-        searchTask() {
-            console.log("Entra en filtered=" + searchCriteria)
-            return this.taskList.filter((task) => {
-                return task.title.toLowerCase().includes(searchCriteria.toLowerCase());
-            });
-        },
-
-
-
-
-        getTodayDate() {
-            let today = new Date();
-            let dd = String(today.getDate()).padStart(2, '0');
-            let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-            let yyyy = today.getFullYear();
-            const todayformat = yyyy + "-" + mm + "-" + dd;
-            console.log("la fecha es: " + todayformat, today.toDateString())
-            return todayformat;
-        },
-        getState(item) {
-            if (item.completed === true) {
-                return 'Done';
-            }
-            else {
-                return 'Todo';
-            }
-        },
-        getEditable(item) {
-            if (item.completed === true) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-    },
-
-    computed: {
-
-    },
-});

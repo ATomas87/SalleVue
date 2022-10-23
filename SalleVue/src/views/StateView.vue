@@ -4,11 +4,9 @@
 
     <div class="wrapper">
         <div class="appBox">
-
             <div>
                 <img src="./../assets/VueLogo.png" style="margin: 10px 10px" />
             </div>
-
             <div class="container">
                 <div class="row">
                     <div class="col float-start">
@@ -43,7 +41,7 @@
                         <div class="row">
                             <div class="col" v-for="task in TaskList.filter((task) => task.state === 'Todo')"
                                 :key="task.id">
-                                <ItemState :task="task" @task-update="taskStore.updateTask()">
+                                <ItemState :task="task">
                                 </ItemState>
                                 <br />
                             </div>
@@ -55,7 +53,7 @@
                         <div class="row">
                             <div class="col" v-for="task in TaskList.filter((task) => task.state === 'Done')"
                                 :key="task.id">
-                                <ItemState :task="task" @task-update="taskStore.updateTask()">
+                                <ItemState :task="task" >
                                 </ItemState>
                                 <br />
                             </div>

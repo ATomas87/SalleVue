@@ -31,42 +31,42 @@
                     </div>
                     <div class="col">
                         <img src="./../assets/VueFilter.png" width="20" height="20" alt="Filter"
-                            style="display: inline" />
-                            <!-- @click="filteredList" -->
+                            style="display: inline" />                        
                     </div>
                     <div class="col">
-                        <!-- <img src="./../assets/VueAdd.png" @click="insertTask" alt="New" /> -->
-                        <p @click="insertTask" style='font-size:xx-large;'>+ Add</p>
+                        <p @click="insertTask" style='font-size: xx-large'>+ Add</p>
                     </div>
                 </div>
             </div>
             <div><br /></div>
             <div class="container">
                 <div v-for="task in TaskList" :key="task.id">
-                    <ItemList :task="task" @task-update="taskStore.updateTask()">
+                    <ItemList :task="task">
                     </ItemList>
                 </div>
             </div>
         </div>
     </div>
 </template>
-  
+
 <script>
 import ItemList from "../components/ItemList.vue"
 import { useTaskStore } from '../stores/TaskStore'
 
+let search=""
+
 export default {
 
     setup() {
-        const taskStore = useTaskStore()
+        const taskStore = useTaskStore()       
         return { taskStore }
     },
 
     computed: {
-        TaskList() {
-            console.log(this.taskStore.taskList)
+        TaskList() {                    
             return this.taskStore.getTaskList
-        }
+        }, 
+
     },
 
     components: {
@@ -78,13 +78,17 @@ export default {
             this.taskStore.insertTask()
         },
 
-        /*filteredList() {           
-            this.taskStore.searchTask("baila")
-
-             return this.taskList.filter((task) => {
-                return task.title.toLowerCase().includes(this.search.toLowerCase()); 
+        /* searchTasks() {
+            console.log("Entra a search de ListView "  + search)
+            return this.taskStore.getTaskList.filter((task) => {
+                return task.title.toLowerCase().includes(search.toLowerCase());
             });
-        },*/
+            //this.taskStore.searchTasks(input)
+        },
+        applyFilter(){
+            search='44'
+        } */
+        
     },
 
 };
@@ -95,7 +99,7 @@ export default {
     display: grid;
     place-items: center;
     min-height: 100vh;
-    background: linear-gradient(to bottom, #C9A9E2, #8A3CC7);     
+    background: linear-gradient(to bottom, #C9A9E2, #8A3CC7);
 }
 
 .appBox {

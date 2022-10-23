@@ -41,10 +41,15 @@
                     v-model="task.date" />
             </div>
             <div class="float-end">
-                <img src="./../assets/VueEdit.png" width="20" height="20" alt="Edit"
+                <img v-if="!task.isEditable" src="./../assets/VueEdit.png" width="20" height="20" alt="Edit"
+                    style="vertical-align: middle; margin: 0px 10px" @click="editTask" />
+                <img v-else src="./../assets/VueCancel.png" width="20" height="20" alt="Save"
                     style="vertical-align: middle; margin: 0px 10px" @click="task.isEditable=!task.isEditable" />
-                <img src="./../assets/VueDelete.png" width="16" alt="Delete"
+
+                <img v-if="!task.isEditable" src="./../assets/VueDelete.png" width="16" alt="Delete"
                     style="vertical-align: middle; margin: 0px 10px" @click="deleteTask" />
+                <img v-else src="./../assets/VueSave.png" width="20" height="20" alt="Save"
+                    style="vertical-align: middle; margin: 0px 10px" @click="updateTask" />
             </div>
         </div>
     </div>
@@ -74,9 +79,16 @@ export default {
 
     methods: {
         updateTask() {
+            console.log("Entra a update de ItemState")
+            this.task.isEditable = false
             this.taskStore.updateTask(this.task)
         },
+        editTask() {
+            console.log("Entra a edit de ItemState")
+            this.task.isEditable = true
+        },
         deleteTask() {
+            console.log("Entra a delete de ItemState")
             this.taskStore.deleteTask(this.task.id)
         }
     },
