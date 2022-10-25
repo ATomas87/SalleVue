@@ -1,4 +1,4 @@
-import { getConstantType } from '@vue/compiler-core';
+//import { getConstantType } from '@vue/compiler-core';
 import { defineStore } from 'pinia' //importacio necessaria per senyalar que es un store
 
 const url = "https://todos-mpwar.herokuapp.com/users/grup2/todos";
@@ -18,8 +18,8 @@ export const useTaskStore = defineStore('task', {
             state.temporalData.forEach(function (item) {
                 let newTask = {
                     id: item?.id,
-                    title: String(item?.text),
-                    description: item?.description,
+                    title: String(item.text),
+                    description: item.description,
                     date: "",
                     state: "",
                     isEditable: false,
@@ -31,14 +31,14 @@ export const useTaskStore = defineStore('task', {
                     newTask.state = 'Todo';
                 }
                 if (item?.completed === true) {
-                    newTask.isEditable = true;
+                    newTask.isEditable = false;
                 }
                 else {
                     newTask.isEditable = false;
                 }
                 let today = new Date();
                 let dd = String(today.getDate()).padStart(2, '0');
-                let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                let mm = String(today.getMonth() + 1).padStart(2, '0'); 
                 let yyyy = today.getFullYear();
                 newTask.date = yyyy + "-" + mm + "-" + dd;
                 state.taskList.push(newTask);
@@ -54,7 +54,8 @@ export const useTaskStore = defineStore('task', {
         }
     },
 
-    //accions per modificar la informació
+
+   //accions per modificar informació contra API
     actions: {
         async initializedTask() {
             try {
@@ -62,7 +63,8 @@ export const useTaskStore = defineStore('task', {
                 console.log("Passa per inicializar de store");
                 const response = await fetch(url);
                 const data = await response.json();
-                this.temporalData = data;                
+                this.temporalData = data;
+                this.temporalData.sort((a, b) => { return b.title - a.title });                
             } catch (error) {
                 console.log(error);
             }

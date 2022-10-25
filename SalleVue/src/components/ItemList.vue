@@ -17,7 +17,7 @@
                 : task.state === 'Done'
                 ? 'card-header list-group-item-success'
                 : 'card-header list-group-item-warning'
-            " v-else @blur="task.isEditable=!task.isEditable" v-model="task.state">
+            " v-else v-model="task.state">
                 <option value="Todo">Todo</option>
                 <option value="Done">Done</option>
             </select>
@@ -47,14 +47,15 @@
                     style="vertical-align: middle; margin: 0px 10px" @click="deleteTask" />
                 <img v-else src="./../assets/VueSave.png" width="20" height="20" alt="Save"
                     style="vertical-align: middle; margin: 0px 10px" @click="updateTask" />
-            </div>
+            </div>           
         </div>
-    </div>
+    </div>    
 </template>
 
 <script>
 
 import { useTaskStore } from '../stores/TaskStore'
+
 
 export default {
     name: "ItemList",
@@ -68,6 +69,9 @@ export default {
             isEditable: Boolean,
         },
     },
+    components:{
+       
+    },
 
     setup() {
         const taskStore = useTaskStore()
@@ -76,22 +80,21 @@ export default {
 
     methods: {
         updateTask() {
-            console.log("Entra a update de ItemList")
+            //console.log("Entra a update de ItemList")
             this.task.isEditable = false
             this.taskStore.updateTask(this.task)
         },
         editTask() {
-            console.log("Entra a edit de ItemList")
+            //console.log("Entra a edit de ItemList")
             this.task.isEditable = true
         },
         deleteTask() {
-            console.log("Entra a delete de ItemList")
+            //console.log("Entra a delete de ItemList")
             this.taskStore.deleteTask(this.task.id)
         }
     },
 }
 </script>
 
-<style scoped>
-
+<style>
 </style>

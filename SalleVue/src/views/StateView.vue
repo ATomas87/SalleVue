@@ -36,8 +36,9 @@
             <div><br /></div>
             <div class="container">
                 <div class="lists">
+                    <!-- LEFT LIST (TODO) -->
                     <div class="left">
-                        <h3>To Do</h3>
+                        <h3 style="text-align: center;">To Do</h3>
                         <div class="row">
                             <div class="col" v-for="task in TaskList.filter((task) => task.state === 'Todo')"
                                 :key="task.id">
@@ -47,9 +48,9 @@
                             </div>
                         </div>
                     </div>
-                    <!-- INICI PART LLISTAT RIGHT (DONE) -->
+                    <!-- RIGHT LIST (DONE) -->
                     <div class="right">
-                        <h3>Done</h3>
+                        <h3 style="text-align: center;">Done</h3>
                         <div class="row">
                             <div class="col" v-for="task in TaskList.filter((task) => task.state === 'Done')"
                                 :key="task.id">
@@ -61,7 +62,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -106,7 +106,8 @@ export default {
   
 <style>
 .lists {
-    padding-left: 5vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
     display: flex;
     align-items: flex-start;
 }

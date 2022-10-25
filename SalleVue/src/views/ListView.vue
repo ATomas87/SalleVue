@@ -10,31 +10,32 @@
 
             <div class="container">
                 <div class="row">
-                    <div class="col">
-                        <div>
-                            <router-link to="/ListView"
-                                style="color: black;display:flex;text-decoration:none;vertical-align: middle; margin: 0px 10px">
-                                <img src="./../assets/VueListActive.png" width="30" height="30" alt="List"
-                                    style="vertical-align: middle; margin: 0px 10px" />
-                            </router-link>
 
-                            <router-link to="/StateView"
-                                style="color: black;display: flex;text-decoration:none;vertical-align: middle; margin: 0px 10px">
-                                <img src="./../assets/VueDragListDeActive.png" width="30" height="30" alt="List"
-                                    style="vertical-align: middle; margin: 0px 10px" />
-                            </router-link>
-                        </div>
+                    <div class="col float-start">
+                        <router-link to="/ListView"
+                            style="color: black;display:inline;text-decoration:none;vertical-align: middle; margin: 0px 10px ">
+                            <img src="./../assets/VueListActive.png" width="30" height="30" alt="List"
+                                style="vertical-align: middle; " />
+                        </router-link> 
+                        <router-link to="/StateView"
+                            style="display:inline-flex;text-decoration:none;vertical-align: middle; margin: 0px 10px">
+                            <img src="./../assets/VueDragListDeActive.png" width="30" height="30" alt="State"
+                                style="vertical-align: middle; margin: 0px 10px" />
+                        </router-link>
                     </div>
+
                     <div class="col">
                         <input class="form-control" v-model="search" placeholder="Search title.." type="search"
                             style="display: inline" />
                     </div>
+
                     <div class="col">
                         <img src="./../assets/VueFilter.png" width="20" height="20" alt="Filter"
-                            style="display: inline" />                        
+                            style="display: inline" />
                     </div>
+
                     <div class="col">
-                        <p @click="insertTask" style='font-size: xx-large'>+ Add</p>
+                        <p @click="insertTask" style='font-size: xx-large;cursor: pointer;'>+ Add</p>
                     </div>
                 </div>
             </div>
@@ -53,19 +54,19 @@
 import ItemList from "../components/ItemList.vue"
 import { useTaskStore } from '../stores/TaskStore'
 
-let search=""
+let search = ""
 
 export default {
 
     setup() {
-        const taskStore = useTaskStore()       
+        const taskStore = useTaskStore()
         return { taskStore }
     },
 
     computed: {
-        TaskList() {                    
+        TaskList() {
             return this.taskStore.getTaskList
-        }, 
+        },
 
     },
 
@@ -88,7 +89,7 @@ export default {
         applyFilter(){
             search='44'
         } */
-        
+
     },
 
 };
