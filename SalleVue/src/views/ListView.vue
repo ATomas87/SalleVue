@@ -5,7 +5,7 @@
     <div class="wrapper">
         <div class="appBox">
             <div>
-                <img src="./../assets/VueLogo.png" style="margin: 10px 10px" />
+                <img src="./../assets/VueLogo.png" style="width: 11rem; margin: 10px 10px" />
             </div>
 
             <div class="container">
@@ -33,14 +33,19 @@
                     </div>
                     <div class="col">
                         <img src="./../assets/VueFilter.png" width="20" height="20" alt="Filter"
-                            style="display: inline" />                        
+                            style="display: inline" />
                     </div>
                     <div class="col">
-                        <p @click="insertTask" style='font-size: xx-large'>+ Add task</p>
+                        <img src="./../assets/user.png" width="30" height="30" alt="users" />
+                        <p style="display: inline"> {{ dynamicSelected }}</p>
+                        <select v-model="dynamicSelected">
+                            <option v-for="option in options" :value="option.value" :key="option.value">
+                                {{ option.text }}
+                            </option>
+                        </select>
                     </div>
-                    <div>
-                        <img src="./../assets/user.png" width="40" height="40" alt="Users"
-                        style="display: inline" />
+                    <div class="col">
+                        <p @click="insertTask" style="font-size: 1.5rem">+ Add task</p>
                     </div>
                 </div>
             </div>
@@ -59,19 +64,31 @@
 import ItemList from "../components/ItemList.vue"
 import { useTaskStore } from '../stores/TaskStore'
 
-let search=""
+let search = ""
 
 export default {
+    data() {
+        return {
+            dynamicSelected: "",
+            options: [
+                { text: "Antonio"},
+                { text: "David" },
+                { text: "Judith" },
+                { text: "Lucía" },
+                { text: "Rocío" },
+            ],
+        }
+    },
 
     setup() {
-        const taskStore = useTaskStore()       
+        const taskStore = useTaskStore()
         return { taskStore }
     },
 
     computed: {
-        TaskList() {                    
+        TaskList() {
             return this.taskStore.getTaskList
-        }, 
+        },
 
     },
 
@@ -94,7 +111,7 @@ export default {
         applyFilter(){
             search='44'
         } */
-        
+
     },
 
 };
@@ -106,11 +123,12 @@ export default {
     place-items: center;
     min-height: 100vh;
     /*background: linear-gradient(to bottom, #C9A9E2, #8A3CC7);*/
-    background:url("../assets/fondo.png");
+    background-image: url("../assets/fondo.png");
+    background-size: cover;
 }
 
 .appBox {
-    max-width: 660px;
+    max-width: 750px;
     min-height: 400px;
     width: 80%;
     margin: 100px;
@@ -119,5 +137,6 @@ export default {
     border-radius: 20px;
     background: #EBE9E9;
 }
+
 </style>
   

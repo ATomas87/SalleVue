@@ -5,7 +5,7 @@
     <div class="wrapper">
         <div class="appBox">
             <div>
-                <img src="./../assets/VueLogo.png" style="margin: 10px 10px" />
+                <img src="./../assets/VueLogo.png" style="width: 11rem; margin: 10px 10px" />
             </div>
             <div class="container">
                 <div class="row">
@@ -30,6 +30,15 @@
                         <img src="./../assets/VueFilter.png" width="20" height="20" alt="Filter"
                             style="display: inline" />
                     </div>
+                    <div class="col">
+                        <img src="./../assets/user.png" width="30" height="30" alt="users" />
+                        <p style="display: inline"> {{ dynamicSelected }}</p>
+                        <select v-model="dynamicSelected">
+                            <option v-for="option in options" :value="option.value" :key="option.value">
+                                {{ option.text }}
+                            </option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -53,7 +62,7 @@
                         <div class="row">
                             <div class="col" v-for="task in TaskList.filter((task) => task.state === 'Done')"
                                 :key="task.id">
-                                <ItemState :task="task" >
+                                <ItemState :task="task">
                                 </ItemState>
                                 <br />
                             </div>
@@ -73,7 +82,18 @@ import ItemState from "../components/ItemState.vue"
 import { useTaskStore } from '../stores/TaskStore'
 
 export default {
-
+    data() {
+        return {
+            dynamicSelected: "",
+            options: [
+                { text: "Antonio" },
+                { text: "David" },
+                { text: "Judith" },
+                { text: "Lucía" },
+                { text: "Rocío" },
+            ],
+        }
+    },
     setup() {
         const taskStore = useTaskStore()
         return { taskStore }
@@ -136,11 +156,13 @@ export default {
     place-items: center;
     min-height: 100vh;
     /*background: linear-gradient(to bottom, #C9A9E2, #8A3CC7);*/
-    background:url("../assets/fondo.png");
+    background-image: url("../assets/fondo.png");
+    background-size: cover;
+
 }
 
 .appBox {
-    max-width: 660px;
+    max-width: 750px;
     min-height: 400px;
     width: 80%;
     margin: 100px;
