@@ -26,15 +26,21 @@
                         </div>
                     </div>
                     <div class="col">
-                        <input class="form-control" v-model="search" placeholder="Search title.." type="search"
+                        <input class="form-control" v-model="search" placeholder="Search..." type="search"
                             style="display: inline" />
+                        <!-- /*<img src="./../assets/lupa.png" width="30" height="30" alt="List"
+                        style="display: inline" />*/ -->
                     </div>
                     <div class="col">
                         <img src="./../assets/VueFilter.png" width="20" height="20" alt="Filter"
                             style="display: inline" />                        
                     </div>
                     <div class="col">
-                        <p @click="insertTask" style='font-size: xx-large'>+ Add</p>
+                        <p @click="insertTask" style='font-size: xx-large'>+ Add task</p>
+                    </div>
+                    <div>
+                        <img src="./../assets/user.png" width="40" height="40" alt="Users"
+                        style="display: inline" />
                     </div>
                 </div>
             </div>
@@ -99,7 +105,8 @@ export default {
     display: grid;
     place-items: center;
     min-height: 100vh;
-    background: linear-gradient(to bottom, #C9A9E2, #8A3CC7);
+    /*background: linear-gradient(to bottom, #C9A9E2, #8A3CC7);*/
+    background:url("../assets/fondo.png");
 }
 
 .appBox {
@@ -108,9 +115,9 @@ export default {
     width: 80%;
     margin: 100px;
     padding: 20px;
-    box-shadow: 3px 2px 12px 8px #e1e1e1;
+    box-shadow: 3px 2px 12px 8px #EBE9E9;
     border-radius: 20px;
-    background: #eee;
+    background: #EBE9E9;
 }
 </style>
   

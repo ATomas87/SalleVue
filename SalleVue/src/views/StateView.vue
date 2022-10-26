@@ -135,7 +135,8 @@ export default {
     display: grid;
     place-items: center;
     min-height: 100vh;
-    background: linear-gradient(to bottom, #C9A9E2, #8A3CC7);
+    /*background: linear-gradient(to bottom, #C9A9E2, #8A3CC7);*/
+    background:url("../assets/fondo.png");
 }
 
 .appBox {
@@ -144,8 +145,8 @@ export default {
     width: 80%;
     margin: 100px;
     padding: 20px;
-    box-shadow: 3px 2px 12px 8px #e1e1e1;
+    box-shadow: 3px 2px 12px 8px #EBE9E9;
     border-radius: 20px;
-    background: #eee;
+    background: #EBE9E9;
 }
 </style>
