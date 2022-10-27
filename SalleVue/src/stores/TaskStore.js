@@ -45,7 +45,8 @@ export const useTaskStore = defineStore('task', {
             }
             );
             console.log(state.taskList);
-            return state.taskList
+            //this.taskList.sort((a, b) => { return b.id - a.id })
+            return state.taskList.sort((a, b) => { return b.id - a.id })
         },
         getTaskById: (state) => {
             return (id) => {
@@ -60,7 +61,7 @@ export const useTaskStore = defineStore('task', {
         async initializedTask() {
             try {
                 this.temporalData = [];
-                console.log("Passa per inicializar de store");
+                //console.log("Passa per inicializar de store");
                 const response = await fetch(url);
                 const data = await response.json();
                 this.temporalData = data;
@@ -71,7 +72,7 @@ export const useTaskStore = defineStore('task', {
         },    
 
         async insertTask() {
-            console.log("Passa per insert de store");           
+            //console.log("Passa per insert de store");           
             const requestOptions = {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
@@ -87,8 +88,8 @@ export const useTaskStore = defineStore('task', {
         },
 
         async updateTask(updatedTask) {
-            console.log("Passa per update de store"); 
-            console.log(updatedTask);
+            //console.log("Passa per update de store"); 
+            //console.log(updatedTask);
             let taskCompleted;
             if (updatedTask.state === 'Done') {
                 taskCompleted=true;
@@ -119,7 +120,7 @@ export const useTaskStore = defineStore('task', {
         },
 
         async deleteTask(id) {
-            console.log("Passa per delete de store");                    
+            //console.log("Passa per delete de store");                    
             const requestOptions = {
                 method: "DELETE",
                 headers: { "Content-type": "application/json" },                

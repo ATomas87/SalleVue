@@ -16,7 +16,7 @@
                             style="color: black;display:inline;text-decoration:none;vertical-align: middle; margin: 0px 10px ">
                             <img src="./../assets/VueListActive.png" width="30" height="30" alt="List"
                                 style="vertical-align: middle; " />
-                        </router-link> 
+                        </router-link>
                         <router-link to="/StateView"
                             style="display:inline-flex;text-decoration:none;vertical-align: middle; margin: 0px 10px">
                             <img src="./../assets/VueDragListDeActive.png" width="30" height="30" alt="State"
@@ -29,13 +29,22 @@
                             style="display: inline" />
                     </div>
 
-                    <div class="col">
+                   <!--  <div class="col">
                         <img src="./../assets/VueFilter.png" width="20" height="20" alt="Filter"
                             style="display: inline" />
-                    </div>
-
+                    </div> -->
                     <div class="col">
-                        <p @click="insertTask" style='font-size: xx-large;cursor: pointer;'>+ Add</p>
+                        <img src="./../assets/user.png" width="30" height="30" alt="users" />
+                        <p style="display: inline"> {{ dynamicSelected }}</p>
+                        <select v-model="dynamicSelected">
+                            <option v-for="option in options" :value="option.value" :key="option.value">
+                                {{ option.text }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <p @click="insertTask" style="font-size: 1.5rem;cursor: pointer">+ Add task</p>
+                        <!-- <p @click="insertTask" style='font-size: xx-large;cursor: pointer;'>+ Add</p> -->
                     </div>
                 </div>
             </div>
@@ -57,7 +66,18 @@ import { useTaskStore } from '../stores/TaskStore'
 let search = ""
 
 export default {
-
+    data() {
+        return {
+            dynamicSelected: "",
+            options: [
+                { text: "Antonio" },
+                { text: "David" },
+                { text: "Judith" },
+                { text: "Lucía" },
+                { text: "Rocío" },
+            ],
+        }
+    },
     setup() {
         const taskStore = useTaskStore()
         return { taskStore }

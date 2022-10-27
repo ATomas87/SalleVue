@@ -26,9 +26,18 @@
                         <input class="form-control" v-model="search" placeholder="Search title.." type="search"
                             style="display: inline" />
                     </div>
-                    <div class="col">
+                   <!--  <div class="col">
                         <img src="./../assets/VueFilter.png" width="20" height="20" alt="Filter"
                             style="display: inline" />
+                    </div> -->
+                    <div class="col">
+                        <img src="./../assets/user.png" width="30" height="30" alt="users" />
+                        <p style="display: inline"> {{ dynamicSelected }}</p>
+                        <select v-model="dynamicSelected">
+                            <option v-for="option in options" :value="option.value" :key="option.value">
+                                {{ option.text }}
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -74,6 +83,18 @@ import { useTaskStore } from '../stores/TaskStore'
 
 export default {
 
+    data() {
+        return {
+            dynamicSelected: "",
+            options: [
+                { text: "Antonio" },
+                { text: "David" },
+                { text: "Judith" },
+                { text: "Lucía" },
+                { text: "Rocío" },
+            ],
+        }
+    },
     setup() {
         const taskStore = useTaskStore()
         return { taskStore }
