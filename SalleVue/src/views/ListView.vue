@@ -25,6 +25,11 @@
                             </router-link>
                         </div>
                     </div>
+                    <!-- Prueba Lucía Search -->
+                    <div class="col">
+                        <q-input label="Search..." v-model="filtro" />
+                    </div>
+
                     <div class="col">
                         <input class="form-control" v-model="search" placeholder="Search..." type="search"
                             style="display: inline" />
@@ -69,15 +74,33 @@ let search = ""
 export default {
     data() {
         return {
+            Tasks: [],
+            texto: '',
+            arrayFiltrado: [],
             dynamicSelected: "",
             options: [
-                { text: "Antonio"},
+                { text: "Antonio" },
                 { text: "David" },
                 { text: "Judith" },
                 { text: "Lucía" },
                 { text: "Rocío" },
             ],
         }
+
+/*         return {
+            dynamicSelected: "",
+            options: [
+                { text: "Antonio" },
+                { text: "David" },
+                { text: "Judith" },
+                { text: "Lucía" },
+                { text: "Rocío" },
+            ],
+        } */
+    },
+
+    created() {
+        this.arrayFiltrado = this.Tasks;
     },
 
     setup() {
@@ -86,6 +109,18 @@ export default {
     },
 
     computed: {
+        filtro: {
+            get() {
+                return this.texto
+            },
+            set(value) {
+                /* console.log(value); */
+                value = value.toLowerCase();
+                this.arrayFiltrado = this.Tasks.filter(
+                    item => item.texto.toLowerCase().indexOf(value) !== -1);
+                this.texto = value;
+            }
+        },
         TaskList() {
             return this.taskStore.getTaskList
         },
@@ -137,6 +172,5 @@ export default {
     border-radius: 20px;
     background: #EBE9E9;
 }
-
 </style>
   
