@@ -5,7 +5,7 @@
     <div class="wrapper">
         <div class="appBox">
             <div>
-                <img src="./../assets/VueLogo.png" style="margin: 10px 10px" />
+                <img src="./../assets/VueLogo.png" style="width: 11rem;margin: 10px 10px" />
             </div>
 
             <div class="container">
@@ -120,7 +120,9 @@ export default {
     display: grid;
     place-items: center;
     min-height: 100vh;
-    background: linear-gradient(to bottom, #C9A9E2, #8A3CC7);
+    /*background: linear-gradient(to bottom, #C9A9E2, #8A3CC7);*/
+    background-image: url("../assets/fondo.png");
+    background-size: cover;
 }
 
 .appBox {

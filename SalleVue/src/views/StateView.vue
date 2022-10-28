@@ -5,23 +5,24 @@
     <div class="wrapper">
         <div class="appBox">
             <div>
-                <img src="./../assets/VueLogo.png" style="margin: 10px 10px" />
+                <img src="./../assets/VueLogo.png" style="width: 11rem;margin: 10px 10px" />
             </div>
             <div class="container">
                 <div class="row">
+
                     <div class="col float-start">
                         <router-link to="/ListView"
-                            style="display: inline-block;text-decoration:none;vertical-align: middle; margin: 0px 10px">
+                            style="color: black;display:inline;text-decoration:none;vertical-align: middle; margin: 0px 10px ">
                             <img src="./../assets/VueListDeActive.png" width="30" height="30" alt="List"
-                                style="vertical-align: middle; margin: 0px 10px" />
+                                style="vertical-align: middle; " />
                         </router-link>
-
                         <router-link to="/StateView"
-                            style="display: inline-block;text-decoration:none;vertical-align: middle; margin: 0px 10px">
+                            style="display:inline-flex;text-decoration:none;vertical-align: middle; margin: 0px 10px">
                             <img src="./../assets/VueDragListActive.png" width="30" height="30" alt="State"
                                 style="vertical-align: middle; margin: 0px 10px" />
                         </router-link>
                     </div>
+
                     <div class="col">
                         <input class="form-control" v-model="search" placeholder="Search title.." type="search"
                             style="display: inline" />
@@ -39,6 +40,10 @@
                             </option>
                         </select>
                     </div>
+                    <div class="col">
+                        <p @click="insertTask" style="font-size: 1.5rem;cursor: pointer">+ Add task</p>
+                        <!-- <p @click="insertTask" style='font-size: xx-large;cursor: pointer;'>+ Add</p> -->
+                    </div>
                 </div>
             </div>
 
@@ -49,7 +54,7 @@
                     <div class="left">
                         <h3 style="text-align: center;">To Do</h3>
                         <div class="row">
-                            <div class="col" v-for="task in TaskList.filter((task) => task.state === 'Todo')"
+                            <div v-for="task in TaskList.filter((task) => task.state === 'Todo')"
                                 :key="task.id">
                                 <ItemState :task="task">
                                 </ItemState>
@@ -61,7 +66,7 @@
                     <div class="right">
                         <h3 style="text-align: center;">Done</h3>
                         <div class="row">
-                            <div class="col" v-for="task in TaskList.filter((task) => task.state === 'Done')"
+                            <div v-for="task in TaskList.filter((task) => task.state === 'Done')"
                                 :key="task.id">
                                 <ItemState :task="task" >
                                 </ItemState>
@@ -157,7 +162,9 @@ export default {
     display: grid;
     place-items: center;
     min-height: 100vh;
-    background: linear-gradient(to bottom, #C9A9E2, #8A3CC7);
+    /*background: linear-gradient(to bottom, #C9A9E2, #8A3CC7);*/
+    background-image: url("../assets/fondo.png");
+    background-size: cover;
 }
 
 .appBox {
